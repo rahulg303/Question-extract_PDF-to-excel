@@ -22,8 +22,7 @@ def extract_practice_zone_questions(file):
     capture = False
 
     for page in doc:
-        lines = page.get_text().split('
-')
+        lines = page.get_text().split('\n')
         for line in lines:
             if re.search(r'Practice Zone\s*\d*', line, re.IGNORECASE):
                 if buffer:

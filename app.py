@@ -22,29 +22,25 @@ def extract_practice_zone_questions(file):
     capture = False
 
     for page in doc:
-        lines = page.get_text().split('
-')
+        lines = page.get_text().split('\n')
         for line in lines:
             if re.search(r'Practice Zone\s*\d*', line, re.IGNORECASE):
                 if buffer:
-                    practice_questions.append('
-'.join(buffer).strip())
+                    practice_questions.append('\n'.join(buffer).strip())
                     buffer = []
                 capture = True
                 continue
             if capture:
                 if re.match(r'(Chapter \d+|Activity|New Words|SELF ASSESSMENT|All About Plants)', line.strip(), re.IGNORECASE):
                     if buffer:
-                        practice_questions.append('
-'.join(buffer).strip())
+                        practice_questions.append('\n'.join(buffer).strip())
                         buffer = []
                     capture = False
                     continue
                 if line.strip():
                     buffer.append(line.strip())
     if buffer:
-        practice_questions.append('
-'.join(buffer).strip())
+        practice_questions.append('\n'.join(buffer).strip())
     return practice_questions
 
 # Extract filtered questions from WB
@@ -63,8 +59,7 @@ def extract_filtered_workbook_questions(file):
     last_was_question = False
 
     for page in doc:
-        lines = page.get_text().split('
-')
+        lines = page.get_text().split('\n')
         i = 0
         while i < len(lines):
             line = lines[i].strip()
@@ -83,8 +78,7 @@ def extract_filtered_workbook_questions(file):
 
             if is_question_line:
                 if buffer:
-                    extracted.append('
-'.join(buffer).strip())
+                    extracted.append('\n'.join(buffer).strip())
                     buffer = []
                 buffer.append(line)
                 last_was_question = True
@@ -93,8 +87,7 @@ def extract_filtered_workbook_questions(file):
 
             if last_was_question:
                 if line.strip() == "":
-                    extracted.append('
-'.join(buffer).strip())
+                    extracted.append('\n'.join(buffer).strip())
                     buffer = []
                     last_was_question = False
                 else:
@@ -103,8 +96,7 @@ def extract_filtered_workbook_questions(file):
             i += 1
 
     if buffer:
-        extracted.append('
-'.join(buffer).strip())
+        extracted.append('\n'.join(buffer).strip())
 
     return extracted
 
